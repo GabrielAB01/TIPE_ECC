@@ -1,19 +1,25 @@
 # TIPE - Cryptographie et courbes elliptiques
 
-## Contenu du notebook Jupyter :
+<style>
+h2{
+	text-decoration: underline red 1px;
+}
+</style>
+
+## Contenu du notebook Jupyter
 
 - ### Classe `IntModP(int)` :
 
-  _Opérations sur les entiers de_ $\mathbb{Z}/p\mathbb{Z}$
+  > Opérations sur les entiers de $\mathbb{Z}/p\mathbb{Z}$
 
   - Pour calculer l'inverse : Théorème de Fermat : $n^{p-1} = 1 \ [p] \implies n * (n^{p-2}) = 1\  [p] \implies n^{-1} = n^{p-2}$
-  - Utilisation de la fonction `pow(n)` pour utiliser l'exponentiation rapide
+  - Création de la fonction `pow(n)` qui implémente l'exponentiation rapide
 
 <br>
 
 - ### Classe `CurvePoint` :
 
-  _Point sur une courbe elliptique de_ $\mathbb{Z}/p\mathbb{Z}$
+  > Point sur une courbe elliptique de $\mathbb{Z}/p\mathbb{Z}$
 
   - Addition de 2 points
   - Produit par un entier : Calcul de $nP$ par l'algorithme _Double and Add_
@@ -22,13 +28,13 @@
 
 - ### Classe `EllipticCurve` :
 
-  _Représente une courbe elliptique de paramètres_ $\ a, b \in \mathbb{Z}/p\mathbb{Z} \ $ _ie d'équation_ $\ y^2 = x^3 + ax + b \ [p]$
+  > Représente une courbe elliptique de paramètres $\ a, b \in \mathbb{Z}/p\mathbb{Z}$ ie d'équation $\ y^2 = x^3 + ax + b \ [p]$
 
   - Calcul du discriminant
   - Création de la liste des points de la courbe
   - Affichage des points dans le plan
 
-## Déroulé
+## Déroulé Opérationnel du TIPE (DOT)
 
 ### Septembre :
 
@@ -39,10 +45,16 @@
 
 ### Octobre :
 
-- Implémentation de l'algorithme'
-<br />
-<br />
-<br />
-<hr/>
+- Implémentation de l'algorithme pour placer un point sur la courbe avec les matrices
 
-### _<u>Gabriel Abenhaim</u> - MP\* - 2022/2023_
+<br>
+
+---
+
+<br>
+
+> ## Gabriel Abenhaim
+>
+> > La Martinière Monplaisir - MP\*
+>
+> > Année 2022/2023

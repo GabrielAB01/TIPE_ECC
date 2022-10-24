@@ -32,10 +32,10 @@
 
 ### Septembre :
 
-- Début de la programmation : classes principales et opérations ([elliptic_curves.pdf](https://github.com/GabrielAB01/TIPE_ECC/blob/master/elliptic_curves.pdf))
+- Début de la programmation : classes principales et opérations ([elliptic_curves.pdf](https://github.com/GabrielAB01/TIPE_ECC/blob/master/docs/elliptic_curves.pdf))
 - Problèmes : Comment lier un message à un point de la courbe ?
   - Méthode avec les probas ? $\rightarrow$ Bcp de points à admettre
-  - Méthode avec les matrices ? $\rightarrow$ Semble efficace et pas trop dur à mettre en place
+  - Méthode avec les matrices ? $\rightarrow$ Semble efficace et pas trop dur à mettre en place ([Traduction_message_matrices.pdf](https://github.com/GabrielAB01/TIPE_ECC/blob/master/docs/Traduction_message_matrices.pdf))
 
 ### Octobre :
 

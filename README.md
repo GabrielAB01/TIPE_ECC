@@ -45,7 +45,10 @@ h2{
 
 ### Octobre :
 
-- Implémentation de l'algorithme pour placer un point sur la courbe avec les matrices
+- Implémentation de l'algorithme complet de transmission d'un message
+  - Point sur la courbe : On code la phrase en une matrice ligne de points
+  - On calcule les produits matriciels et on transmet une matrice ligne S
+  - On effectue les opérations inverses pour décoder
 
 <br>
 

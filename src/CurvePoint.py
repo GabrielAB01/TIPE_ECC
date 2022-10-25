@@ -5,6 +5,7 @@ class CurvePoint:
     def __init__(self, a, b, x=None, y=None):
         self.a = IntModP(a)
         self.b = IntModP(b)
+        self.o = False
 
         if x==None and y==None :
             self.x = x
@@ -86,11 +87,16 @@ class CurvePoint:
         return self + (-q)
 
     def order(self):
+        if self.o:
+            return self.o
+
         o = 0
         P = self
         while (not P.isNeutral()) and o < 100_000:
             P = P + self
             o+=1
+
+        self.o = o
         return o
 
     def getCoords(self):

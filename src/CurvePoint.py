@@ -53,8 +53,13 @@ class CurvePoint:
 
     # Produit P*n avec l'algorithme 'Double and add'
     def __mul__(self, n):
-        if type(n) != int or n<=0 :
+        if type(n) != int :
             raise Exception("n doit être un entier positif !")
+
+        if n==0 :
+            return CurvePoint(self.a, self.b)
+        elif n<0 :
+            return -(self * (-n))
 
         bits = bin(n) # Représentation en binaire de n
         result = CurvePoint(self.a, self.b) # Neutre
@@ -70,4 +75,21 @@ class CurvePoint:
     # Produit n*P :  
     def __rmul__(self, n):
         return self * n
+
+    # Opposé -P
+    def __neg__(self):
+        if self.isNeutral():
+            return self
+        return CurvePoint(self.a, self.b, self.x, -self.y)
+    
+    def __sub__(self, q):
+        return self + (-q)
+
+    def order(self):
+        o = 0
+        P = self
+        while (not P.isNeutral()) and o < 100_000:
+            P = P + self
+            o+=1
+        return o
   

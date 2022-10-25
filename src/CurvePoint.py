@@ -92,4 +92,9 @@ class CurvePoint:
             P = P + self
             o+=1
         return o
+
+    def getCoords(self):
+        x = str(self.x).split(" ")[0]
+        y = str(self.y).split(" ")[0]
+        return f"{x},{y}"
   

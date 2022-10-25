@@ -23,7 +23,7 @@ class Encoder:
 		self.P = P
 		self.getPointsArray()
 	
-	
+		
 	def getPointsArray(self):
 		alphabet = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 		dico = {} # lettre -> Point sur la courbe
@@ -36,7 +36,7 @@ class Encoder:
 		self.dico = dico
 
 		# Inverser le dictionaire : 
-		self.dico_inv = {f"{P.x},{P.y}": l for l, P in dico.items()}
+		self.dico_inv = {P.getCoords(): l for l, P in dico.items()}
 
 		
 	

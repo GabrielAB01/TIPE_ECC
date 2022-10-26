@@ -1,5 +1,3 @@
-from src.constants import p
-
 # Exponentiation rapide
 def pow(x: float, n: int):
     if n==0 :
@@ -14,12 +12,13 @@ def pow(x: float, n: int):
 	Représente un entier et ses opérations modulo p
 """
 class IntModP(int):
+    p=0
     def __new__(cls, n):
-        return int.__new__(cls, n % p)
+        return int.__new__(cls, n % IntModP.p)
         
     # Affichage en console
     def __str__(self): 
-        return int.__str__(self) + f" [{p}]"
+        return int.__str__(self) + f" [{IntModP.p}]"
     
     # Opposé mod p
     def __neg__(self):
@@ -50,9 +49,10 @@ class IntModP(int):
     
     
     def inverse(self): # O(log(p))
-        return IntModP(pow(self, p-2)) # Théorème de Fermat : n**(p-1) * n = 1 [p]
+        return IntModP(pow(self, IntModP.p-2)) # Théorème de Fermat : n**(p-1) * n = 1 [p]
 
     def inverse_old(self):
+        p = IntModP.p
         for i in range(p):
             if (self * i) % p == 1:
                 return IntModP(i)

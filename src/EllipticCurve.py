@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 
-from src.constants import p
 from src.IntModP import IntModP
 from src.CurvePoint import CurvePoint
 
@@ -25,6 +24,7 @@ class EllipticCurve:
         return CurvePoint(self.a, self.b, x, y)
 
     def createPoints(self):
+        p = IntModP.p
         self.points.append(self.newPoint())  # Elément neutre
 
         for x in range(p):
@@ -37,7 +37,7 @@ class EllipticCurve:
         y_list = [el.y for el in self.points]
         # print(x_list, y_list)
         plt.figure(1, figsize=(10, 10))
-        plt.axis([-0.5, p-0.5, -0.5, p - 0.5])
+        plt.axis([-0.5, IntModP.p-0.5, -0.5, IntModP.p - 0.5])
         plt.grid()
         plt.text(0, 0.5, f"${self.__str__()}$", size="xx-large", color="blue", family='cursive',)
         plt.plot(x_list, y_list, 'ro', markersize=12)

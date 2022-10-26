@@ -1,7 +1,6 @@
 import numpy as np
 from random import randrange
 from src.utils import createMatrixFromRow
-from src.CurvePoint import CurvePoint
 
 class Emitter:
 	def __init__(self, msg, public: dict):
@@ -29,7 +28,7 @@ class Emitter:
 
 		# Compléter avec des caractères nuls pour que len(arr) == 3
 		if n%3 != 0 :
-			neutralPoint = CurvePoint(public["P"].a, public["P"].b)
+			neutralPoint = public["P"].getNeutral()
 			arr = arr + ( [neutralPoint] * (3 - n%3))
 
 		n = len(arr)

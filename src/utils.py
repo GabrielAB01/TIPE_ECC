@@ -23,7 +23,7 @@ def createMaps_old(P: CurvePoint):
 	alphabet = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789>"
 	letterToPoint = {} # Lettre -> Point sur la courbe
 	pointToLetter = {} # Point sur la courbe --> Lettre
-	point = CurvePoint(P.a, P.b) # neutre
+	point = P.getNeutral()
 	
 	for l in alphabet:
 		letterToPoint[l] = point
@@ -43,7 +43,7 @@ def createMaps_old(P: CurvePoint):
 def createMaps(P: CurvePoint):
 	letterToPoint = {} # Lettre -> Point sur la courbe
 	pointToLetter = {} # Point sur la courbe --> Lettre
-	point = CurvePoint(P.a, P.b) # neutre
+	point = P.getNeutral()
 	
 	# Pour tous les codes ASCII
 	for i in range(128):

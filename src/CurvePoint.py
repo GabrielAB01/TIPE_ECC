@@ -1,4 +1,3 @@
-from src.constants import p
 from src.IntModP import IntModP
 
 class CurvePoint:
@@ -16,6 +15,7 @@ class CurvePoint:
 
     # Affichage lors d'un print
     def __str__(self):
+        p = IntModP.p
         if self.isNeutral():
             return f"Neutre de E(Z/{p}Z)"
         return f"Point de E(Z/{p}Z) : ({self.x}, {self.y})"
@@ -27,6 +27,9 @@ class CurvePoint:
     def isNeutral(self):
         return self.x == None and self.y == None
 
+    def getNeutral(self):
+        return CurvePoint(self.a, self.b)
+
     def __add__(self, q):
         # Si un des 2 est le neutre
         if self.isNeutral():
@@ -36,7 +39,7 @@ class CurvePoint:
 
         # Si Q=-P
         if q.x == self.x and q.y == -self.y:
-            return CurvePoint(self.a, self.b)  # Element neutre
+            return self.getNeutral()
 
         # Calcul de L (pente)
         L = IntModP(0)
@@ -50,7 +53,7 @@ class CurvePoint:
         # Coordonnées du nouveau point :
         x3 = (L**2 - x1 - x2)
         y3 = (-L * x3 - (y1 - L*x1)) 
-        return CurvePoint(self.a, self.b,x3, y3)  # Element neutre
+        return CurvePoint(self.a, self.b,x3, y3)
 
     # Produit P*n avec l'algorithme 'Double and add'
     def __mul__(self, n):
@@ -58,12 +61,12 @@ class CurvePoint:
             raise Exception("n doit être un entier positif !")
 
         if n==0 :
-            return CurvePoint(self.a, self.b)
+            return self.getNeutral()
         elif n<0 :
             return -(self * (-n))
 
         bits = bin(n) # Représentation en binaire de n
-        result = CurvePoint(self.a, self.b) # Neutre
+        result = self.getNeutral() # Neutre
         current = self # Vaut toujours 2^i * P
 
         for i in range(len(bits)-1, 1, -1): # On commence par le bit de poids faible

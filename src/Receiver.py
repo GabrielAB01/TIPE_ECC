@@ -3,11 +3,12 @@ from random import randrange
 from src.utils import createMatrixFromRow
 
 class Receiver:
-	def __init__(self, public):
+	def __init__(self, public, publishKey= True):
 		self.a = randrange(public["q"])
 
-		# Publier aP :
-		public["aP"] = self.a * public["P"]
+		if publishKey :
+			# Publier aP :
+			public["aP"] = self.a * public["P"]
 
 	
 	def decodeMsg(self, public):
@@ -27,4 +28,7 @@ class Receiver:
 		)
 
 		pointsArr = np.ndarray.flatten(M) # Matrice (P1, P2, ... Pn)
-		return public["pointsToString"](pointsArr)
+		msg = public["pointsToString"](pointsArr)
+		
+		# Enlever les caractères nuls:
+		return msg.rstrip('\x00')

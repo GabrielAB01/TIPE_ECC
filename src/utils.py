@@ -18,7 +18,8 @@ def displayPointsArray(arr):
 	print([(el.x, el.y) for el in arr])
 
 
-def createMaps(P: CurvePoint):
+# Placer les points avec l'alphabet
+def createMaps_old(P: CurvePoint):
 	alphabet = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789>"
 	letterToPoint = {} # Lettre -> Point sur la courbe
 	pointToLetter = {} # Point sur la courbe --> Lettre
@@ -38,7 +39,27 @@ def createMaps(P: CurvePoint):
 
 	return (stringToPoints, pointsToString)
 
+# Placer les points avec les codes ASCII
+def createMaps(P: CurvePoint):
+	letterToPoint = {} # Lettre -> Point sur la courbe
+	pointToLetter = {} # Point sur la courbe --> Lettre
+	point = CurvePoint(P.a, P.b) # neutre
+	
+	# Pour tous les codes ASCII
+	for i in range(128):
+		l = chr(i)
+		letterToPoint[l] = point
+		pointToLetter[point.getCoords()] = l
+		point = point + P
+	
+	def stringToPoints(str):
+		return [letterToPoint[l] for l in str]
 
+	def pointsToString(arr):
+		msg = [pointToLetter[Q.getCoords()] for Q in arr]
+		return "".join(msg)
+
+	return (stringToPoints, pointsToString)
 
 def createMatrixA():
 	A = np.array([

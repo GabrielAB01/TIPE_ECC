@@ -1,6 +1,6 @@
 import numpy as np
 from random import randrange
-from src.utils import createMatrixFromRow
+from src.utils import createMatrixFromRow, displayPointsArray
 
 class Receiver:
 	def __init__(self, public, publishKey= True):
@@ -15,8 +15,6 @@ class Receiver:
 		# Reconstituer la matrice S (de dim 1,n)
 		bP, X = public["bP"]
 		S = X - self.a*bP # (S + baP) - a(bP)
-		n = len(S)
-		r = int(n/3)
 
 		# Retransformer S en une chaîne de caractères
 		Q = createMatrixFromRow(S)

@@ -1,6 +1,6 @@
 import numpy as np
 from random import randrange
-from src.utils import createMatrixFromRow
+from src.utils import createMatrixFromRow, displayPointsArray
 
 class Emitter:
 	def __init__(self, msg, public: dict):
@@ -9,14 +9,14 @@ class Emitter:
 
 	
 	def encodeMsg(self, public):
-		pointsArr, n = self.createPointsArray(public)
+		pointsArr = self.createPointsArray(public)
 		M = createMatrixFromRow(pointsArr)
 
 		Q = np.dot(public["A"], M)
-
+		
 		# S est la donnée à transmettre ! (de dimension 1,n)
 		S = np.ndarray.flatten(Q)
-
+		
 		# Publier le couple (bP, S + b(aP)) - Le 2ème élement est une matrice
 		public["bP"] = ( self.b*public["P"], S + self.b*public["aP"] )
 
@@ -31,5 +31,4 @@ class Emitter:
 			neutralPoint = public["P"].getNeutral()
 			arr = arr + ( [neutralPoint] * (3 - n%3))
 
-		n = len(arr)
-		return (arr, n)
+		return arr

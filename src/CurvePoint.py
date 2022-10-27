@@ -93,7 +93,7 @@ class CurvePoint:
         if self.o:
             return self.o
 
-        o = 0
+        o = 1  #! 0 est d'ordre 1 et si 2*P=0 alors P est d'ordre 2
         P = self
         while (not P.isNeutral()) and o < 100_000:
             P = P + self

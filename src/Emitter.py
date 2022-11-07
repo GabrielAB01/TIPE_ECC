@@ -5,7 +5,7 @@ from src.utils import createMatrixFromRow, displayPointsArray
 class Emitter:
 	def __init__(self, msg, public: dict):
 		self.msg = msg
-		self.b = randrange(public["q"])
+		self.b = randrange(1, public["q"])
 
 	
 	def encodeMsg(self, public):

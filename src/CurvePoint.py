@@ -6,7 +6,7 @@ class CurvePoint:
         self.b = IntModP(b)
         self.o = False
 
-        if x==None and y==None :
+        if x is None or y is None :
             self.x = x
             self.y = y
         else:
@@ -25,7 +25,7 @@ class CurvePoint:
         return self.x == q.x and self.y == q.y
 
     def isNeutral(self):
-        return self.x == None and self.y == None
+        return self.x is None and self.y is None
 
     def getNeutral(self):
         return CurvePoint(self.a, self.b)
@@ -53,7 +53,7 @@ class CurvePoint:
         # Coordonnées du nouveau point :
         x3 = (L**2 - x1 - x2)
         y3 = (-L * x3 - (y1 - L*x1)) 
-        return CurvePoint(self.a, self.b,x3, y3)
+        return CurvePoint(self.a, self.b, x3, y3)
 
     # Produit P*n avec l'algorithme 'Double and add'
     def __mul__(self, n):
@@ -95,7 +95,7 @@ class CurvePoint:
 
         o = 1  #! 0 est d'ordre 1 et si 2*P=0 alors P est d'ordre 2
         P = self
-        while (not P.isNeutral()) and o < 100_000:
+        while (not P.isNeutral()) and o < 1_000_000:
             P = P + self
             o+=1
 

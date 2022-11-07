@@ -26,12 +26,16 @@ class EllipticCurve:
 
     def createPoints(self):
         p = IntModP.p
-        self.points.append(self.newPoint())  # Elément neutre
+        a = int(self.a) # On retransforme en int pour accélérer les calculs car le %p se fait dans le =
+        b = int(self.b)
+        points = [self.newPoint()] # Elément neutre
 
         for x in range(p):
             for y in range(p):
-                if (y**2 % p) == ((x**3 + self.a * x + self.b) % p):
-                    self.points.append(self.newPoint(x, y))
+                if (y*y - (x*x*x + a*x + b)) % p == 0: # x*x*x est plus rapide que x**3 !!
+                    points.append(self.newPoint(x, y))
+        
+        self.points = points
 
     def drawPoints(self):
         x_list = [el.x for el in self.points]
@@ -50,9 +54,7 @@ class EllipticCurve:
         print(list(points))
 
 
-    def getGeneratorPoint(self, order):
-        p = IntModP.p
-        
+    def getGeneratorPoint(self, order):        
         # L'ordre du groupe est un multiple de l'ordre d'un élément
         if len(self.points) % order !=0 or order > len(self.points):
             raise Exception("L'ordre d'un élément doit diviser l'ordre du groupe !")

@@ -4,7 +4,7 @@ from src.utils import createMatrixFromRow, displayPointsArray
 
 class Receiver:
 	def __init__(self, public, publishKey= True):
-		self.a = randrange(public["q"])
+		self.a = randrange(1, public["q"])
 
 		if publishKey :
 			# Publier aP :

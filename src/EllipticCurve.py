@@ -13,7 +13,7 @@ class EllipticCurve:
         if self.discriminant() == 0:
             raise Exception("Le discriminant est nul !")
 
-        self.createPoints()
+        # self.createPoints()
 
     def discriminant(self):
         return (self.a**3 * 4 + self.b**2 * 27) * -16
@@ -71,5 +71,20 @@ class EllipticCurve:
                 return P
 
         raise Exception(f"Pas de points d'ordre {order} sur la courbe {self}")
+
+    def getPointOfOrder(self, order):
+        p = IntModP.p
+        if order >=p + 1 + 2 * sqrt(p):
+            raise Exception("Ordre trop grand (Th de Hasse)")
+
+        a = int(self.a) # On retransforme en int pour accélérer les calculs car le %p se fait dans le =
+        b = int(self.b)
+        
+        for x in range(p):
+            for y in range(p):
+                if (y*y - (x*x*x + a*x + b)) % p == 0:
+                    P = CurvePoint(a, b, x, y)
+                    if P.order() > order :
+                        return P
         
  

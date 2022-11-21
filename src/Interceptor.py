@@ -14,9 +14,9 @@ class Interceptor:
 		R = Receiver(public, False)
 
 	
-	def log_discret(self, base, Q: CurvePoint):
+	def log_discret(self, base: CurvePoint, Q: CurvePoint): # O(p*log(p))
 		if Q.isNeutral():
-			return 0
+			return base.order()
 
 		i = 1
 		temp = base

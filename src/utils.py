@@ -19,8 +19,9 @@ def displayPointsArray(arr):
 
 
 # Placer les points avec l'alphabet
-def createMaps_old(P: CurvePoint):
-	alphabet = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789>"
+def createMaps(P: CurvePoint):
+	alphabet = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,;:!?./%§²&é'(-è_çà)=~#{[|`^@]}\\\"°+=êïîöôù*µ$£€ÉÊË"
+
 	letterToPoint = {} # Lettre -> Point sur la courbe
 	pointToLetter = {} # Point sur la courbe --> Lettre
 	point = P.getNeutral()
@@ -40,7 +41,7 @@ def createMaps_old(P: CurvePoint):
 	return (stringToPoints, pointsToString)
 
 # Placer les points avec les codes ASCII
-def createMaps(P: CurvePoint):
+def createMaps_old(P: CurvePoint):
 	letterToPoint = {} # Lettre -> Point sur la courbe
 	pointToLetter = {} # Point sur la courbe --> Lettre
 	point = P.getNeutral()
@@ -51,7 +52,7 @@ def createMaps(P: CurvePoint):
 		letterToPoint[l] = point
 		pointToLetter[point.getCoords()] = l
 		point = point + P
-	
+	print(letterToPoint)
 	def stringToPoints(str):
 		return [letterToPoint[l] for l in str]
 
@@ -66,7 +67,7 @@ def createMatrixA():
 		[-1, 5, -1], 
 		[-2, 11, 7], 
 		[1, -5, 2]
-	])
+	], dtype=int)
 	# A doit être de déterminant 1 ou -1
 	if abs(np.linalg.det(A)) != 1 :
 		raise Exception('A doit être de déterminant 1 ou -1')

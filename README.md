@@ -50,7 +50,10 @@ h2{
   - On calcule les produits matriciels et on transmet une matrice ligne S
   - On effectue les opérations inverses pour décoder
 
-<br>
+### Novembre :
+
+- Quelques algos de log discret
+  <br>
 
 ---
 

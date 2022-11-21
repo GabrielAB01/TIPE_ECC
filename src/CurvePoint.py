@@ -30,7 +30,7 @@ class CurvePoint:
     def getNeutral(self):
         return CurvePoint(self.a, self.b)
 
-    def __add__(self, q):
+    def __add__(self, q): # O(log(p)) car on calcule l'inverse d'un entier mod p
         # Si un des 2 est le neutre
         if self.isNeutral():
             return q
@@ -56,7 +56,7 @@ class CurvePoint:
         return CurvePoint(self.a, self.b, x3, y3)
 
     # Produit P*n avec l'algorithme 'Double and add'
-    def __mul__(self, n):
+    def __mul__(self, n): # O(log(n)log(p)) car la somme de points est en log(p)
         if type(n) != int :
             raise Exception("n doit être un entier positif !")
 

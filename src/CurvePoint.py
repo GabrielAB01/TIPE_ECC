@@ -106,4 +106,7 @@ class CurvePoint:
         x = str(self.x).split(" ")[0]
         y = str(self.y).split(" ")[0]
         return f"{x},{y}"
+
+    def __hash__(self) -> int:
+        return hash(self.getCoords())
   

@@ -83,3 +83,19 @@ def initPublic(P: CurvePoint):
 		"q": P.order(),
 		"A": createMatrixA()
 	}
+
+
+def primeFactors(n):
+	factors = []	 
+	i = 2
+	while i * i <= n:
+		if n % i == 0:
+			n = n//i
+			factors.append(i)
+		else:
+			i += 1
+			
+	if n > 1:
+		factors.append(n)
+		
+	return factors

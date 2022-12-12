@@ -53,7 +53,11 @@ h2{
 ### Novembre :
 
 - Quelques algos de log discret
-  <br>
+  - Brute force
+  - Baby-step Giant-step
+  - Algorithme $\rho$ de Pollard
+  - ~~Algorithme de Pohlig-Hellman~~
+    <br>
 
 ---
 

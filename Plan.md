@@ -1,13 +1,9 @@
-# Plan partiel du TIPE sur les courbes elliptiques :
+# Cryptographie sur courbes elliptiques <!-- omit from toc -->
 
-<!-- TOC -->
-
-- [Plan](#plan-partiel-du-tipe-sur-les-courbes-elliptiques-)
-  - [1. Logarithme discret et courbes elliptiques](#1-logarithme-discret-et-courbes-elliptiques)
-  - [2. ECC : Elliptic Curve Cryptography](#2-ecc--elliptic-curve-cryptography)
-  - [3. Application à un cas concret :](#3-application--un-cas-concret-)
-  - [4. Autres :](#4-autres-)
-  <!-- TOC -->
+- [1. Logarithme discret et courbes elliptiques](#1-logarithme-discret-et-courbes-elliptiques)
+- [2. ECC : Elliptic Curve Cryptography](#2-ecc--elliptic-curve-cryptography)
+- [3. Application à un cas concret :](#3-application-à-un-cas-concret-)
+- [4. Autres :](#4-autres-)
 
 <style>
 h2 {

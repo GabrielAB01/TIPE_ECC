@@ -69,11 +69,17 @@ class CurvePoint:
         result = self.getNeutral() # Neutre
         current = self # Vaut toujours 2^i * P
 
-        for i in range(len(bits)-1, 1, -1): # On commence par le bit de poids faible
+        # for i in range(len(bits)-1, 1, -1): 
+        #     bit = int(bits[i])
+        #     if bit == 1 :
+        #         result += current
+        #     current = current + current
+        # return result
+        for i in range(2, len(bits)): 
             bit = int(bits[i])
+            result = result + result
             if bit == 1 :
                 result += current
-            current = current + current
         return result     
 
     # Produit n*P :  

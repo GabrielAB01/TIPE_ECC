@@ -3,12 +3,8 @@ from random import randrange
 from src.utils import createMatrixFromRow, displayPointsArray
 
 class Receiver:
-	def __init__(self, public, publishKey= True):
+	def __init__(self, public):
 		self.a = randrange(1, public["q"])
-
-		if publishKey :
-			# Publier aP :
-			public["aP"] = self.a * public["P"]
 
 	
 	def decodeMsg(self, public):

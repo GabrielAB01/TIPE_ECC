@@ -1,18 +1,12 @@
 # TIPE - Cryptographie et courbes elliptiques
 
-<style>
-h2{
-	text-decoration: underline red 1px;
-}
-</style>
-
 ## Contenu du notebook Jupyter
 
 - ### Classe `IntModP(int)` :
 
   > Opérations sur les entiers de $\mathbb{Z}/p\mathbb{Z}$
-
-  - Pour calculer l'inverse : Théorème de Fermat : $n^{p-1} = 1 \ [p] \implies n * (n^{p-2}) = 1\  [p] \implies n^{-1} = n^{p-2}$
+  - Addition, Soustraction, Multiplication
+  - Pour calculer l'inverse : Théorème de Fermat : $n^{p-1} = 1 \ [p] \implies n^{-1} = n^{p-2}$
   - Création de la fonction `pow(n)` qui implémente l'exponentiation rapide
 
 <br>
@@ -23,7 +17,8 @@ h2{
 
   - Addition de 2 points
   - Produit par un entier : Calcul de $nP$ par l'algorithme _Double and Add_
-
+  - Calcul de l'ordre d'un point
+  
 <br>
 
 - ### Classe `EllipticCurve` :
@@ -33,6 +28,27 @@ h2{
   - Calcul du discriminant
   - Création de la liste des points de la courbe
   - Affichage des points dans le plan
+  - Fonction `getGeneratorPoint(order)` pour récupérer un point de la courbe d'ordre `order`.
+  - Fonction `getPointOfOrder(order)` pour récupérer un point de la courbe d'ordre au moins `order`. (Plus rapide que la précédente)
+  
+<br>
+
+- ### Classe `Emitter` :
+  > Permet de chiffrer un message
+
+  - `__init__(msg, public)` : Initialise la clé privée de l'émetteur en fonction de l'ordre du point générateur.
+  - `encodeMsg(public)` : Ajoute une entrée dans le dictionnaire `public` contenant la clé publique de chiffrement.
+  
+<br>
+
+- ### Classe `Receiver` :
+  > Permet de déchiffrer un message
+
+  - `__init__(msg, public)` : Initialise la clé privée du récepteur en fonction de l'ordre du point générateur.
+  - `encodeMsg(public)` : Retourne le message déchiffré à l'aide la clé du dictionnaire `public`.
+
+  
+<br>
 
 ## Déroulé Opérationnel du TIPE (DOT)
 
@@ -57,7 +73,23 @@ h2{
   - Baby-step Giant-step
   - Algorithme $\rho$ de Pollard
   - ~~Algorithme de Pohlig-Hellman~~
-    <br>
+
+### Décembre - Janvier :
+- Rédaction du MCOT : Lien avec le thème, Mots-clés, Plan, Problématique, Bibliographie commentée
+
+
+### Février :
+- Début de la préparation de la présentation :
+  - Thème Beamer
+  - Plan détaillé
+  - Partie "théorique" : définition de courbe elliptique + Problème du log discret
+
+### Mars : 
+- Algorithmes d'exponentiation rapide et _Double and Add_ écrit en pseudo-code
+- Algorithmes de résolution du log discret :
+  - _Brute Force_
+
+<br>
 
 ---
 

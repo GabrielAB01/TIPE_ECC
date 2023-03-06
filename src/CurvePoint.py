@@ -1,16 +1,17 @@
 from src.IntModP import IntModP
 
+
 class CurvePoint:
     def __init__(self, a, b, x=None, y=None):
         self.a = IntModP(a)
         self.b = IntModP(b)
         self.o = False
 
-        if x is None or y is None :
+        if x is None or y is None:
             self.x = x
             self.y = y
         else:
-            self.x = IntModP(x) 
+            self.x = IntModP(x)
             self.y = IntModP(y)
 
     # Affichage lors d'un print
@@ -30,7 +31,7 @@ class CurvePoint:
     def getNeutral(self):
         return CurvePoint(self.a, self.b)
 
-    def __add__(self, q): # O(log(p)) car on calcule l'inverse d'un entier mod p
+    def __add__(self, q):  # O(log(p)) car on calcule l'inverse d'un entier mod p
         # Si un des 2 est le neutre
         if self.isNeutral():
             return q
@@ -52,30 +53,30 @@ class CurvePoint:
 
         # Coordonnées du nouveau point :
         x3 = (L**2 - x1 - x2)
-        y3 = (-L * x3 - (y1 - L*x1)) 
+        y3 = (-L * x3 - (y1 - L*x1))
         return CurvePoint(self.a, self.b, x3, y3)
 
     # Produit P*n avec l'algorithme 'Double and add'
-    def __mul__(self, n): # O(log(n)log(p)) car la somme de points est en log(p)
-        if type(n) != int :
+    def __mul__(self, n):  # O(log(n)log(p)) car la somme de points est en log(p)
+        if type(n) != int:
             raise Exception("n doit être un entier positif !")
 
-        if n==0 :
+        if n == 0:
             return self.getNeutral()
-        elif n<0 :
+        elif n < 0:
             return -(self * (-n))
 
-        bits = bin(n) # Représentation en binaire de n
-        result = self.getNeutral() # Neutre
+        bits = bin(n)  # Représentation en binaire de n
+        result = self.getNeutral()  # Neutre
 
-        for i in range(2, len(bits)): 
+        for i in range(2, len(bits)):
             bit = int(bits[i])
             result = result + result
-            if bit == 1 :
+            if bit == 1:
                 result += self
-        return result     
+        return result
 
-    # Produit n*P :  
+    # Produit n*P :
     def __rmul__(self, n):
         return self * n
 
@@ -84,7 +85,7 @@ class CurvePoint:
         if self.isNeutral():
             return self
         return CurvePoint(self.a, self.b, self.x, -self.y)
-    
+
     def __sub__(self, q):
         return self + (-q)
 
@@ -92,11 +93,11 @@ class CurvePoint:
         if self.o:
             return self.o
 
-        o = 1  #! 0 est d'ordre 1 et si 2*P=0 alors P est d'ordre 2
+        o = 1  # ! 0 est d'ordre 1 et si 2*P=0 alors P est d'ordre 2
         P = self
         while (not P.isNeutral()) and o < 1_000_000:
             P = P + self
-            o+=1
+            o += 1
 
         self.o = o
         return o
@@ -108,4 +109,3 @@ class CurvePoint:
 
     def __hash__(self) -> int:
         return hash(self.getCoords())
-  

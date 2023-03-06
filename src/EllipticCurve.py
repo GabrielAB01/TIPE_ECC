@@ -4,6 +4,7 @@ from math import sqrt
 from src.IntModP import IntModP
 from src.CurvePoint import CurvePoint
 
+
 class EllipticCurve:
     def __init__(self, a, b):
         self.a = IntModP(a)
@@ -20,21 +21,21 @@ class EllipticCurve:
 
     def __str__(self) -> str:
         return f"y^2 = x^3 + {self.a}x + {self.b}"
-        
+
     def newPoint(self, x=None, y=None):
         return CurvePoint(self.a, self.b, x, y)
 
     def createPoints(self):
         p = IntModP.p
-        a = int(self.a) # On retransforme en int pour accélérer les calculs car le %p se fait dans le =
+        a = int(self.a)  # On retransforme en int pour accélérer les calculs car le %p se fait dans le =
         b = int(self.b)
-        points = [self.newPoint()] # Elément neutre
+        points = [self.newPoint()]  # Elément neutre
 
         for x in range(p):
             for y in range(p):
-                if (y*y - (x*x*x + a*x + b)) % p == 0: # x*x*x est plus rapide que x**3 !!
+                if (y*y - (x*x*x + a*x + b)) % p == 0:  # x*x*x est plus rapide que x**3 !!
                     points.append(self.newPoint(x, y))
-        
+
         self.points = points
 
     def drawPoints(self):
@@ -53,20 +54,19 @@ class EllipticCurve:
         points = map(lambda el: (el.x, el.y), self.points)
         print(list(points))
 
-
-    def getGeneratorPoint(self, order):        
+    def getGeneratorPoint(self, order):
         # L'ordre du groupe est un multiple de l'ordre d'un élément
-        if len(self.points) % order !=0 or order > len(self.points):
+        if len(self.points) % order != 0 or order > len(self.points):
             raise Exception("L'ordre d'un élément doit diviser l'ordre du groupe !")
-        
+
         for P in self.points:
             # On calcule l'ordre en se limitant à o = order
             o = 1
             Q = P
             while (not Q.isNeutral()) and o <= order+1:
                 Q = Q + P
-                o+=1
-            
+                o += 1
+
             if o == order:
                 return P
 
@@ -74,17 +74,15 @@ class EllipticCurve:
 
     def getPointOfOrder(self, order):
         p = IntModP.p
-        if order >=p + 1 + 2 * sqrt(p):
+        if order >= p + 1 + 2 * sqrt(p):
             raise Exception("Ordre trop grand (Th de Hasse)")
 
-        a = int(self.a) # On retransforme en int pour accélérer les calculs car le %p se fait dans le =
+        a = int(self.a)  # On retransforme en int pour accélérer les calculs car le %p se fait dans le =
         b = int(self.b)
-        
+
         for x in range(p):
             for y in range(p):
                 if (y*y - (x*x*x + a*x + b)) % p == 0:
                     P = CurvePoint(a, b, x, y)
-                    if P.order() > order :
+                    if P.order() > order:
                         return P
-        
- 

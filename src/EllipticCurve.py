@@ -6,7 +6,7 @@ from src.CurvePoint import CurvePoint
 
 
 class EllipticCurve:
-    def __init__(self, a, b):
+    def __init__(self, a, b):  # Initialisation des paramètres de la courbe
         self.a = IntModP(a)
         self.b = IntModP(b)
         self.points = []
@@ -14,17 +14,17 @@ class EllipticCurve:
         if self.discriminant() == 0:
             raise Exception("Le discriminant est nul !")
 
-        # self.createPoints()
-
     def discriminant(self):
         return (self.a**3 * 4 + self.b**2 * 27) * -16
 
     def __str__(self) -> str:
         return f"y^2 = x^3 + {self.a}x + {self.b}"
 
+    # Renvoie un nouveau point de la courbe
     def newPoint(self, x=None, y=None):
         return CurvePoint(self.a, self.b, x, y)
 
+    # Création de la liste self.points
     def createPoints(self, q=None):
         p = q or IntModP.p
         a = int(self.a)  # On retransforme en int pour accélérer les calculs car le %p se fait dans le =
@@ -38,7 +38,8 @@ class EllipticCurve:
 
         self.points = points
 
-    def getPrimesNumber(self, n: int):  # Retourne les n premiers nombres premiers
+    # Retourne les n premiers nombres premiers
+    def getPrimesNumber(self, n: int):
         primes = [2]
         i = 1
         p = 3
@@ -49,6 +50,7 @@ class EllipticCurve:
             p += 2
         return primes
 
+    # Affiche le graphe ep <= sqrt(p)
     def test_hasse(self):
         primes = self.getPrimesNumber(500)
         ep_list = []
@@ -67,22 +69,23 @@ class EllipticCurve:
         plt.plot(y2_list, markersize=2)
         plt.show()
 
+    # Affiche les points de la courbe
     def drawPoints(self):
         x_list = [el.x for el in self.points]
         y_list = [el.y for el in self.points]
-        # print(x_list, y_list)
         plt.figure(1, figsize=(10, 10))
         plt.axis([-0.5, IntModP.p-0.5, -0.5, IntModP.p - 0.5])
         plt.grid()
         plt.text(0, 0.5, f"${self.__str__()}$", size="large", color="blue", family='cursive',)
         plt.plot(x_list, y_list, 'ro', markersize=12)
-        # plt.savefig("graph.jpg")
         plt.show()
 
+    # Print tous les points de la courbe
     def printPoints(self):
         points = map(lambda el: (el.x, el.y), self.points)
         print(list(points))
 
+    # Renvoie un point d'ordre order après avoir créé les points :
     def getGeneratorPoint(self, order):
         # L'ordre du groupe est un multiple de l'ordre d'un élément
         if len(self.points) % order != 0 or order > len(self.points):
@@ -101,6 +104,7 @@ class EllipticCurve:
 
         raise Exception(f"Pas de points d'ordre {order} sur la courbe {self}")
 
+    # Renvoie un point d'ordre au moins order
     def getPointOfOrder(self, order):
         p = IntModP.p
         if order >= p + 1 + 2 * sqrt(p):
@@ -113,5 +117,5 @@ class EllipticCurve:
             for y in range(p):
                 if (y*y - (x*x*x + a*x + b)) % p == 0:
                     P = CurvePoint(a, b, x, y)
-                    if P.order() > order:
+                    if P.order() >= order:
                         return P

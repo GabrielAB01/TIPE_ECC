@@ -13,6 +13,7 @@ class LogDiscret:
         # But Trouver a avec aP et P (log discret)
         a = self.logDiscret(public['P'], public["aP"])
 
+    # Algorithme Brute Force
     def log_discret(self, base: CurvePoint, Q: CurvePoint):  # O(p*log(p))
         if Q.isNeutral():
             return base.order()
@@ -29,7 +30,8 @@ class LogDiscret:
 
         return i
 
-    def baby_step_giant_step(self, base: CurvePoint, Q: CurvePoint) -> int:  # O(log(p) * sqrt(n)) avec l'ordre de la base
+    # Log discret par l'algorithme Baby-step Giant-step
+    def baby_step_giant_step(self, base: CurvePoint, Q: CurvePoint) -> int:  # O(log(p) * sqrt(q)) avec q l'ordre de la base
         q = base.order()
         m = ceil(sqrt(q))
         R = m * base
@@ -51,6 +53,7 @@ class LogDiscret:
 
         raise Exception(f"Le log discret de {Q} en base {base} n'a pas été trouvé ")
 
+    # Log discret par l'algorithme rho de Pollard
     def rho_pollard(self, base: CurvePoint, Q: CurvePoint):
         # Avec Pohlig-Hellman on peut se ramener à P.o premier
         # Donc on considère ici que q = P.o est premier
@@ -82,6 +85,7 @@ class LogDiscret:
         IntModP.p = p
         return result
 
+    # UNUSED
     def rho_pollard_floyd(self, base: CurvePoint, Q: CurvePoint):
         p = IntModP.p
 

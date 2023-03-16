@@ -2,7 +2,7 @@ from src.IntModP import IntModP
 
 
 class CurvePoint:
-    def __init__(self, a, b, x=None, y=None):
+    def __init__(self, a, b, x=None, y=None):  # Initialisation d'un point
         self.a = IntModP(a)
         self.b = IntModP(b)
         self.o = False
@@ -22,31 +22,34 @@ class CurvePoint:
         return f"Point de E(Z/{p}Z) : ({self.x}, {self.y})"
 
     # Egalité de 2 points
-    def __eq__(self, q):
-        return self.x == q.x and self.y == q.y
+    def __eq__(self, Q):
+        return self.x == Q.x and self.y == Q.y
 
+    # Savoir si un point est le neutre
     def isNeutral(self):
         return self.x is None and self.y is None
 
+    # Renvoie le neutre de E(Fp)
     def getNeutral(self):
         return CurvePoint(self.a, self.b)
 
-    def __add__(self, q):  # O(log(p)) car on calcule l'inverse d'un entier mod p
+    # Addition de 2 points de E(Fp)
+    def __add__(self, Q):  # O(log(p)) car on calcule l'inverse d'un entier mod p
         # Si un des 2 est le neutre
         if self.isNeutral():
-            return q
-        if q.isNeutral():
+            return Q
+        if Q.isNeutral():
             return self
 
         # Si Q=-P
-        if q.x == self.x and q.y == -self.y:
+        if Q.x == self.x and Q.y == -self.y:
             return self.getNeutral()
 
         # Calcul de L (pente)
         L = IntModP(0)
         x1, y1 = self.x, self.y
-        x2, y2 = q.x, q.y
-        if self == q:
+        x2, y2 = Q.x, Q.y
+        if self == Q:
             L = (x1**2 * 3 + self.a) / (y1 * 2)  # Tangente à la courbe en P
         else:
             L = (y1 - y2) / (x1 - x2)  # Coeff directeur de la droite (PQ)
@@ -57,7 +60,7 @@ class CurvePoint:
         return CurvePoint(self.a, self.b, x3, y3)
 
     # Produit P*n avec l'algorithme 'Double and add'
-    def __mul__(self, n):  # O(log(n)log(p)) car la somme de points est en log(p)
+    def __mul__(self, n: int):  # O(log(n)log(p)) car la somme de points est en log(p)
         if type(n) != int:
             raise Exception("n doit être un entier positif !")
 
@@ -77,7 +80,7 @@ class CurvePoint:
         return result
 
     # Produit n*P :
-    def __rmul__(self, n):
+    def __rmul__(self, n: int):
         return self * n
 
     # Opposé -P
@@ -86,9 +89,11 @@ class CurvePoint:
             return self
         return CurvePoint(self.a, self.b, self.x, -self.y)
 
-    def __sub__(self, q):
-        return self + (-q)
+    # Soustraction de 2 points
+    def __sub__(self, Q):
+        return self + (-Q)
 
+    # Retourne l'ordre du point
     def order(self):
         if self.o:
             return self.o
@@ -102,6 +107,7 @@ class CurvePoint:
         self.o = o
         return o
 
+    # Retourne une chaîne de caractères contenant les coordonnées du point
     def getCoords(self):
         x = str(self.x).split(" ")[0]
         y = str(self.y).split(" ")[0]

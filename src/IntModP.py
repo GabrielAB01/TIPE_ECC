@@ -8,11 +8,7 @@ def pow(x: float, n: int):
         return x * pow(x, (n-1)/2)**2
 
 
-"""
-	Représente un entier et ses opérations modulo p
-"""
-
-
+# Représente un entier et ses opérations modulo p
 class IntModP(int):
     p = 0
 

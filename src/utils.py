@@ -44,29 +44,6 @@ def createMaps(P: CurvePoint):
 # Placer les points avec les codes ASCII
 
 
-def createMaps_old(P: CurvePoint):
-    letterToPoint = {}  # Lettre -> Point sur la courbe
-    pointToLetter = {}  # Point sur la courbe --> Lettre
-    point = P.getNeutral()
-
-    # Pour tous les codes ASCII
-    for i in range(128):
-        l = chr(i)
-        letterToPoint[l] = point
-        pointToLetter[point.getCoords()] = l
-        point = point + P
-    print(letterToPoint)
-
-    def stringToPoints(str):
-        return [letterToPoint[l] for l in str]
-
-    def pointsToString(arr):
-        msg = [pointToLetter[Q.getCoords()] for Q in arr]
-        return "".join(msg)
-
-    return (stringToPoints, pointsToString)
-
-
 def createMatrixA():
     A = np.array([
         [-1, 5, -1],
@@ -88,19 +65,3 @@ def initPublic(P: CurvePoint):
         "q": P.order(),
         "A": createMatrixA()
     }
-
-
-def primeFactors(n):
-    factors = []
-    i = 2
-    while i * i <= n:
-        if n % i == 0:
-            n = n//i
-            factors.append(i)
-        else:
-            i += 1
-
-    if n > 1:
-        factors.append(n)
-
-    return factors

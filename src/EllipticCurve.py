@@ -25,8 +25,8 @@ class EllipticCurve:
     def newPoint(self, x=None, y=None):
         return CurvePoint(self.a, self.b, x, y)
 
-    def createPoints(self):
-        p = IntModP.p
+    def createPoints(self, q=None):
+        p = q or IntModP.p
         a = int(self.a)  # On retransforme en int pour accélérer les calculs car le %p se fait dans le =
         b = int(self.b)
         points = [self.newPoint()]  # Elément neutre
@@ -37,6 +37,35 @@ class EllipticCurve:
                     points.append(self.newPoint(x, y))
 
         self.points = points
+
+    def getPrimesNumber(self, n: int):  # Retourne les n premiers nombres premiers
+        primes = [2]
+        i = 1
+        p = 3
+        while i < n:
+            if all([p % d for d in primes]):
+                primes.append(p)
+                i += 1
+            p += 2
+        return primes
+
+    def test_hasse(self):
+        primes = self.getPrimesNumber(500)
+        ep_list = []
+        y_list = []
+        y2_list = []
+        for p in primes:
+            self.createPoints(p)
+            ep_list.append(p+1 - len(self.points))
+            y_list.append(2*sqrt(p))
+            y2_list.append(-2*sqrt(p))
+
+        plt.figure(1, figsize=(10, 10))
+        plt.grid()
+        plt.plot(ep_list, 'ro', markersize=2)
+        plt.plot(y_list, markersize=2)
+        plt.plot(y2_list, markersize=2)
+        plt.show()
 
     def drawPoints(self):
         x_list = [el.x for el in self.points]

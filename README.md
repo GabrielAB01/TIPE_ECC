@@ -88,6 +88,9 @@
 - Algorithmes d'exponentiation rapide et _Double and Add_ écrit en pseudo-code
 - Algorithmes de résolution du log discret :
   - _Brute Force_
+- Exemples de courbes en Latex (discriminant nul)
+- Exemple somme de 2 points dans $\R$
+- Diagrammes pour expliquer Diffie-Hellman et El Gamal
 
 <br>
 

@@ -89,10 +89,22 @@
 - Algorithmes de résolution du log discret :
   - _Brute Force_
 - Exemples de courbes en Latex (discriminant nul)
-- Exemple somme de 2 points dans $\R$
+- Exemple somme de 2 points dans $\mathbb{R}$
 - Diagrammes pour expliquer Diffie-Hellman et El Gamal
 
 <br>
+
+---
+## **Avril -> 12 Mai : _Écrits_**
+---
+
+<br>
+
+### Mai - TODO :
+- Algorithmes de log discret en pseudo-code + screens
+- Signatures et/ou attaques possibles (MITM par exemple) (+ solutions ?)
+- Exemple de transmission concrète (screens)
+- Influence des paramètres sur le tps
 
 ---
 

@@ -9,17 +9,17 @@ class Emitter:
         self.a = randrange(1, public["q"])
 
     def encodeMsg(self, public: dict) -> None:
-        pointsArr = self.createPointsArray(public)
-        M = createMatrixFromRow(pointsArr)
-
+        Pi = self.createPointsArray(public)  # Listes des Pi
+        M = createMatrixFromRow(Pi)
         Q = np.dot(public["A"], M)
 
-        # S est la donnée à transmettre ! (de dimension 1,n)
+        # S est la donnée à transmettre (de dimension 1,n)
         S = np.ndarray.flatten(Q)
 
         # Publier le couple (aP, S + a(bP)) - Le 2ème élement est une liste
         public["aP"] = (self.a*public["P"], S + self.a*public["bP"])
 
+    # Créer la liste des Pi en complétant avec des "neutres"
     def createPointsArray(self, public):
         arr = public["stringToPoints"](self.msg)
         n = len(arr)

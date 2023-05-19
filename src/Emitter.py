@@ -6,9 +6,9 @@ from src.utils import createMatrixFromRow
 class Emitter:
     def __init__(self, msg, public: dict):
         self.msg = msg
-        self.b = randrange(1, public["q"])
+        self.a = randrange(1, public["q"])
 
-    def encodeMsg(self, public):
+    def encodeMsg(self, public: dict) -> None:
         pointsArr = self.createPointsArray(public)
         M = createMatrixFromRow(pointsArr)
 
@@ -17,8 +17,8 @@ class Emitter:
         # S est la donnée à transmettre ! (de dimension 1,n)
         S = np.ndarray.flatten(Q)
 
-        # Publier le couple (bP, S + b(aP)) - Le 2ème élement est une matrice
-        public["bP"] = (self.b*public["P"], S + self.b*public["aP"])
+        # Publier le couple (aP, S + a(bP)) - Le 2ème élement est une liste
+        public["aP"] = (self.a*public["P"], S + self.a*public["bP"])
 
     def createPointsArray(self, public):
         arr = public["stringToPoints"](self.msg)

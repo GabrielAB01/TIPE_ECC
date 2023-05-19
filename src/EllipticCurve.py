@@ -20,7 +20,7 @@ class EllipticCurve:
         return (self.a**3 * 4 + self.b**2 * 27) * -16
 
     def __str__(self) -> str:
-        return f"y^2 = x^3 + {self.a}x + {self.b}"
+        return f"y^2 = x^3 + {str(self.a).split(' ')[0]}x + {self.b}"
 
     # Renvoie un nouveau point de la courbe
     def newPoint(self, x=None, y=None):

@@ -5,15 +5,15 @@ from src.utils import createMatrixFromRow
 
 class Receiver:
     def __init__(self, public):
-        self.a = randrange(1, public["q"])
+        self.b = randrange(1, public["q"])
 
-        # Publier aP :
-        public["aP"] = self.a * public["P"]
+        # Publier bP :
+        public["bP"] = self.b * public["P"]
 
-    def decodeMsg(self, public):
+    def decodeMsg(self, public: dict) -> str:
         # Reconstituer la matrice S (de dim 1,n)
-        bP, X = public["bP"]
-        S = X - self.a*bP  # (S + baP) - a(bP)
+        bP, X = public["aP"]
+        S = X - self.b*bP  # (S + baP) - b(aP)
 
         # Retransformer S en une chaîne de caractères
         Q = createMatrixFromRow(S)

@@ -2,6 +2,8 @@ from src.IntModP import IntModP
 
 
 class CurvePoint:
+    """ Point d'une courbe elliptique """
+
     def __init__(self, a, b, x=None, y=None):  # Initialisation d'un point
         self.a = IntModP(a)
         self.b = IntModP(b)

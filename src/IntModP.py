@@ -1,15 +1,15 @@
 # Exponentiation rapide
-def pow(x: float, n: int):
+def expo_rapide(x: float, n: int):
     if n == 0:
         return 1
     if n % 2 == 0:
-        return pow(x, n/2)**2
+        return expo_rapide(x, n/2)**2
     else:
-        return x * pow(x, (n-1)/2)**2
+        return x * expo_rapide(x, (n-1)/2)**2
 
 
-# Représente un entier et ses opérations modulo p
 class IntModP(int):
+    """ Représente un entier et ses opérations modulo p """
     p = 0
 
     def __new__(cls, n):
@@ -47,11 +47,11 @@ class IntModP(int):
         return IntModP(self * q.inverse())
 
     def inverse(self):  # O(log(p))
-        return IntModP(pow(self, IntModP.p-2))  # Théorème de Fermat : n**(p-1) * n = 1 [p]
+        return IntModP(expo_rapide(self, IntModP.p-2))  # Théorème de Fermat : n**(p-1) * n = 1 [p]
 
     def inverse_old(self):
         p = IntModP.p
         for i in range(p):
             if (self * i) % p == 1:
                 return IntModP(i)
-        raise Exception(f"{self} n'est pas inversible")
+        raise ZeroDivisionError(f"{self} n'est pas inversible")

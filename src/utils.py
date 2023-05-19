@@ -29,14 +29,14 @@ def createMaps(P: CurvePoint):
 
     for l in alphabet:
         letterToPoint[l] = point
-        pointToLetter[point.getCoords()] = l
+        pointToLetter[point] = l
         point = point + P
 
     def stringToPoints(str):
         return [letterToPoint[l] for l in str]
 
     def pointsToString(arr):
-        msg = [pointToLetter[Q.getCoords()] for Q in arr]
+        msg = [pointToLetter[Q] for Q in arr]
         return "".join(msg)
 
     return (stringToPoints, pointsToString)

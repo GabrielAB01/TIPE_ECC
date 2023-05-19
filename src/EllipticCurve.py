@@ -6,6 +6,8 @@ from src.CurvePoint import CurvePoint
 
 
 class EllipticCurve:
+    """ Courbe elliptique sur Z/pZ """
+
     def __init__(self, a, b):  # Initialisation des paramètres de la courbe
         self.a = IntModP(a)
         self.b = IntModP(b)
@@ -24,7 +26,7 @@ class EllipticCurve:
     def newPoint(self, x=None, y=None):
         return CurvePoint(self.a, self.b, x, y)
 
-    # Création de la liste self.points
+    # Création de la liste self.points (modulo q si q est spécifié)
     def createPoints(self, q=None):
         p = q or IntModP.p
         a = int(self.a)  # On retransforme en int pour accélérer les calculs car le %p se fait dans le =

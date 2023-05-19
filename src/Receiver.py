@@ -7,6 +7,9 @@ class Receiver:
     def __init__(self, public):
         self.a = randrange(1, public["q"])
 
+        # Publier aP :
+        public["aP"] = self.a * public["P"]
+
     def decodeMsg(self, public):
         # Reconstituer la matrice S (de dim 1,n)
         bP, X = public["bP"]
@@ -24,5 +27,5 @@ class Receiver:
         pointsArr = np.ndarray.flatten(M)  # Matrice (P1, P2, ... Pn)
         msg = public["pointsToString"](pointsArr)
 
-        # Enlever les caractères nuls:
-        return msg.rstrip('\x00')
+        # Enlever les espaces ajoutés à la fin
+        return msg.rstrip()

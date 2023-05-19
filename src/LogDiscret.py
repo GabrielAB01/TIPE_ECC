@@ -9,11 +9,8 @@ class LogDiscret:
     def __init__(self):
         pass
 
-    def decodeMsg(self, public):
-        # But Trouver a avec aP et P (log discret)
-        a = self.logDiscret(public['P'], public["aP"])
-
     # Algorithme Brute Force
+
     def log_discret(self, base: CurvePoint, Q: CurvePoint):  # O(p*log(p))
         if Q.isNeutral():
             return base.order()

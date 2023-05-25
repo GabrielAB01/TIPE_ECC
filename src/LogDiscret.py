@@ -50,6 +50,28 @@ class LogDiscret:
 
         raise Exception(f"Le log discret de {Q} en base {base} n'a pas été trouvé ")
 
+    # Renvoie l'ordre de P : n tel que O=nP
+    def order_baby_step(self, P: CurvePoint) -> int:
+        p = IntModP.p
+        q = p+1+2*sqrt(p)  # P.o < |E| < p+1+2sqrt(p) (Hasse)
+        m = ceil(sqrt(q))
+        R = m * P
+
+        baby_step = {}
+
+        temp_P = P
+        for i in range(1, m):
+            baby_step[temp_P] = i
+            temp_P += P
+
+        temp_R = P.getNeutral()
+        for j in range(m):
+            # Si Q-jR = iP <=> Q = iP + jR <=> Q = (i+mj)P
+            if temp_R in baby_step:
+                i = baby_step[temp_R]
+                return (i + m*j)
+            temp_R -= R
+
     # Log discret par l'algorithme rho de Pollard
     def rho_pollard(self, base: CurvePoint, Q: CurvePoint):
         # Avec Pohlig-Hellman on peut se ramener à P.o premier

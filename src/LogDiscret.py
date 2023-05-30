@@ -10,15 +10,15 @@ class LogDiscret:
         pass
 
     # Algorithme Brute Force
-
-    def log_discret(self, base: CurvePoint, Q: CurvePoint):  # O(p*log(p))
+    def log_discret(self, base: CurvePoint, Q: CurvePoint) -> int:  # O(p*log(p))
+        # Si Q=O alors on retourne l'ordre de la base
         if Q.isNeutral():
             return base.order()
 
         i = 1
         temp = base
-
-        while temp != Q and i <= 100_000:
+        # On calcule P+P+... jusqu'à tomber sur Q
+        while temp != Q and i <= 1_000_000:
             i += 1
             temp = temp + base
 
@@ -28,18 +28,20 @@ class LogDiscret:
         return i
 
     # Log discret par l'algorithme Baby-step Giant-step
-    def baby_step_giant_step(self, base: CurvePoint, Q: CurvePoint) -> int:  # O(log(p) * sqrt(q)) avec q l'ordre de la base
+    # O(log(p) * sqrt(q)) avec q l'ordre de la base
+    def baby_step_giant_step(self, base: CurvePoint, Q: CurvePoint) -> int:
         q = base.order()
         m = ceil(sqrt(q))
-        R = m * base
+        baby_step = {}  # Dictionnaire des (i, iP)
 
-        baby_step = {}
-
-        temp_P = base.getNeutral()
-        for i in range(m):
+        # Baby Step
+        temp_P = base.getNeutral()  # Variable temporaire
+        for i in range(m):  # Remplissage du dictionnaire
             baby_step[temp_P] = i
             temp_P += base
 
+        # Giant Step
+        R = m * base
         temp_R = Q
         for j in range(m):
             # Si Q-jR = iP <=> Q = iP + jR <=> Q = (i+mj)P
@@ -56,7 +58,6 @@ class LogDiscret:
         q = p+1+2*sqrt(p)  # P.o < |E| < p+1+2sqrt(p) (Hasse)
         m = ceil(sqrt(q))
         R = m * P
-
         baby_step = {}
 
         temp_P = P
@@ -71,34 +72,34 @@ class LogDiscret:
                 i = baby_step[temp_R]
                 return (i + m*j)
             temp_R -= R
+        return "Erreur"
 
     # Log discret par l'algorithme rho de Pollard
     def rho_pollard(self, base: CurvePoint, Q: CurvePoint):
-        # Avec Pohlig-Hellman on peut se ramener à P.o premier
-        # Donc on considère ici que q = P.o est premier
+        # On considère ici que q = P.o est premier
         p = IntModP.p
 
-        def f(_):
-            return (randrange(0, p), randrange(0, p))
+        def f(a, b):  # Fonction pseudo-aléatoire
+            return ((a**2+1) % p, (b**2+1) % p)
 
-        def R(U):
-            a, b = U
+        def R(a, b):  # Renvoie aP+bQ
             return a*base + b*Q
 
-        Ui = (randrange(1, p), randrange(1, p))
-        Ri = R(Ui)
-        rho = {}
+        ai, bi = (randrange(1, p), randrange(1, p))  # Valeurs initiales a0 et b0
+        Ri = R(ai, bi)  # Ri = aiP + biQ
+        rho = {}  # Dictionnaire des Ri pour sauvegarder les valeurs
 
         i = 0
-        while not (Ri in rho) and i <= 20000:
-            rho[Ri] = Ui
-            Ui = f(Ui)
-            Ri = R(Ui)
+        while not (Ri in rho) and i <= 1_000_000:
+            rho[Ri] = (ai, bi)
+            ai, bi = f(ai, bi)
+            Ri = R(ai, bi)
             i += 1
 
         # On a ajP + bjQ = aiP + biQ <=> (aj - ai)P = (bi-bj)Q <=> logP(Q) = (aj-ai)(bi-bj)^-1
-        aj, bj = rho[Ri]
-        ai, bi = Ui
+        aj, bj = rho[Ri]  # Point de la collision
+        print(aj, bj, R(aj, bj))
+        print(ai, bi, R(ai, bi))
         IntModP.p = base.order()
         result = IntModP(aj-ai) * IntModP(bi-bj).inverse()
         IntModP.p = p

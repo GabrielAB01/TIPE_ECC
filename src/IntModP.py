@@ -47,7 +47,7 @@ class IntModP(int):
         return IntModP(self * q.inverse())
 
     def inverse(self):  # O(log(p))
-        return IntModP(expo_rapide(self, IntModP.p-2))  # Théorème de Fermat : n**(p-1) * n = 1 [p]
+        return IntModP(expo_rapide(self, IntModP.p-2))  # Théorème de Fermat : n**(p-2) * n = 1 [p]
 
     def inverse_old(self):
         p = IntModP.p

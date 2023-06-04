@@ -19,6 +19,7 @@ class EllipticCurve:
     def discriminant(self):
         return (self.a**3 * 4 + self.b**2 * 27) * -16
 
+    # Affichage lors d'un print(E)
     def __str__(self) -> str:
         return f"y^2 = x^3 + {str(self.a).split(' ')[0]}x + {self.b}"
 
@@ -26,7 +27,7 @@ class EllipticCurve:
     def newPoint(self, x=None, y=None):
         return CurvePoint(self.a, self.b, x, y)
 
-    # Création de la liste self.points (modulo q si q est spécifié)
+    # Création de la liste self.points
     def createPoints(self, q=None):
         p = q or IntModP.p
         a = int(self.a)  # On retransforme en int pour accélérer les calculs car le %p se fait dans le =
@@ -39,37 +40,6 @@ class EllipticCurve:
                     points.append(self.newPoint(x, y))
 
         self.points = points
-
-    # Retourne les n premiers nombres premiers
-    def getPrimesNumber(self, n: int):
-        primes = [2]
-        i = 1
-        p = 3
-        while i < n:
-            if all([p % d for d in primes]):
-                primes.append(p)
-                i += 1
-            p += 2
-        return primes
-
-    # Affiche le graphe ep <= sqrt(p)
-    def test_hasse(self):
-        primes = self.getPrimesNumber(500)
-        ep_list = []
-        y_list = []
-        y2_list = []
-        for p in primes:
-            self.createPoints(p)
-            ep_list.append(p+1 - len(self.points))
-            y_list.append(2*sqrt(p))
-            y2_list.append(-2*sqrt(p))
-
-        plt.figure(1, figsize=(10, 10))
-        plt.grid()
-        plt.plot(ep_list, 'ro', markersize=2)
-        plt.plot(y_list, markersize=2)
-        plt.plot(y2_list, markersize=2)
-        plt.show()
 
     # Affiche les points de la courbe
     def drawPoints(self):
@@ -106,7 +76,7 @@ class EllipticCurve:
 
         raise Exception(f"Pas de points d'ordre {order} sur la courbe {self}")
 
-    # Renvoie un point d'ordre au moins order
+    # Renvoie un point d'ordre au moins order (sans avoir créé self.points)
     def getPointOfOrder(self, order):
         p = IntModP.p
         if order >= p + 1 + 2 * sqrt(p):
@@ -121,3 +91,34 @@ class EllipticCurve:
                     P = CurvePoint(a, b, x, y)
                     if P.order() >= order:
                         return P
+
+    # Retourne les n premiers nombres premiers
+    def getPrimesNumber(self, n: int):
+        primes = [2]
+        i = 1
+        p = 3
+        while i < n:
+            if all([p % d for d in primes]):
+                primes.append(p)
+                i += 1
+            p += 2
+        return primes
+
+    # Affiche le graphe ep <= sqrt(p)
+    def test_hasse(self):
+        primes = self.getPrimesNumber(500)
+        ep_list = []
+        y_list = []
+        y2_list = []
+        for p in primes:
+            self.createPoints(p)
+            ep_list.append(p+1 - len(self.points))
+            y_list.append(2*sqrt(p))
+            y2_list.append(-2*sqrt(p))
+
+        plt.figure(1, figsize=(10, 10))
+        plt.grid()
+        plt.plot(ep_list, 'ro', markersize=2)
+        plt.plot(y_list, markersize=2)
+        plt.plot(y2_list, markersize=2)
+        plt.show()

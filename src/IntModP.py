@@ -46,6 +46,7 @@ class IntModP(int):
     def __truediv__(self, q):
         return IntModP(self * q.inverse())
 
+    # Inverse dans Z/pZ
     def inverse(self):  # O(log(p))
         return IntModP(expo_rapide(self, IntModP.p-2))  # Théorème de Fermat : n**(p-2) * n = 1 [p]
 

@@ -115,5 +115,6 @@ class CurvePoint:
         y = str(self.y).split(" ")[0]
         return f"{x},{y}"
 
+    # Pour utiliser les points comme key dans un dico
     def __hash__(self) -> int:
         return hash(self.getCoords())

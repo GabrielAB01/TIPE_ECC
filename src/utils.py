@@ -1,7 +1,8 @@
 import numpy as np
 from src.CurvePoint import CurvePoint
 
-
+# Transforme une matrice ligne de dimension n=3r
+# en une matrice de dim 3xr
 def createMatrixFromRow(row):
     n = len(row)
     if (n % 3) != 0:
@@ -14,12 +15,12 @@ def createMatrixFromRow(row):
         [row[j] for j in range(2*r, n)],
     ])
 
-
+# Affiche tous les points d'un tableau
 def displayPointsArray(arr):
     print([(el.x, el.y) for el in arr])
 
 
-# Placer les points avec l'alphabet
+# Création des dictionnaires d'association lettres/points
 def createMaps(P: CurvePoint):
     alphabet = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,;:!?./%§²&é'(-è_çà)=~#{[|`^@]}\\\"°+=êïîöôù*µ$£€ÉÊË"
 
@@ -41,9 +42,7 @@ def createMaps(P: CurvePoint):
 
     return (stringToPoints, pointsToString)
 
-# Placer les points avec les codes ASCII
-
-
+# Création de la matrice A inversible
 def createMatrixA():
     A = np.array([
         [-1, 5, -1],
@@ -55,7 +54,7 @@ def createMatrixA():
         raise Exception('A doit être de déterminant 1 ou -1')
     return A
 
-
+# Création du dictionnaire public
 def initPublic(P: CurvePoint):
     stringToPoints, pointsToString = createMaps(P)
     return {

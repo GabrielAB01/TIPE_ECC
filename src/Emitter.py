@@ -4,10 +4,14 @@ from src.utils import createMatrixFromRow
 
 
 class Emitter:
+    """Permet d'émettre un message"""
+
     def __init__(self, msg, public: dict):
         self.msg = msg
-        self.a = randrange(1, public["q"])
+        self.a = randrange(1, public["q"])  # Clé privée
 
+    # Encode le message et enregistre les données à transmettre
+    # dans le dictionnaire public.
     def encodeMsg(self, public: dict) -> None:
         Pi = self.createPointsArray(public)  # Listes des Pi
         M = createMatrixFromRow(Pi)
